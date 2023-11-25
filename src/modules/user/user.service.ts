@@ -8,6 +8,7 @@ const createUserIntoDB = async (userData: IUser) => {
 }
 
 const getAllUsersFromDB = async () => {
+  // find all user and filter them to see specific fileds
   const results = await User.find(
     {},
     { username: 1, fullName: 1, age: 1, email: 1, address: 1 },
@@ -26,11 +27,16 @@ const deleteUserByUserIdFromDB = async (userId: number) => {
 }
 
 const updateUserByUserId = async (userId: number, userData: IUser) => {
-  const result = await User.findOneAndUpdate({ userId }, { ...userData })
+  const result = await User.findOneAndUpdate(
+    { userId },
+    { ...userData },
+    { new: true },
+  )
   return result
 }
 
 const addNewProductInOrder = async (userId: number, productData: IProduct) => {
+  // add a product to user's order array
   const result = await User.findOneAndUpdate(
     { userId },
     { $push: { orders: productData } },
@@ -40,10 +46,11 @@ const addNewProductInOrder = async (userId: number, productData: IProduct) => {
 
 const getUserOrders = async (userId: number) => {
   const result = await User.findOne({ userId })
-  return { orders: result?.orders }
+  return { orders: result?.orders || [] }
 }
 
 const getUserOrderTotal = async (userId: number) => {
+  // get user's order total
   const result = await User.aggregate([
     {
       $match: {

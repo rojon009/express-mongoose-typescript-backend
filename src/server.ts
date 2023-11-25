@@ -9,8 +9,10 @@ import app from './app'
 /** dotenv config init */
 dotenv.config()
 
+/** env */
 const { PORT, DB_URI } = process.env
 
+/** Server initialize funciton */
 async function main(): Promise<void> {
   await mongoose.connect(DB_URI as string)
 
@@ -22,6 +24,7 @@ async function main(): Promise<void> {
   })
 }
 
+// start server
 main().catch(err => {
   console.error(err)
 })

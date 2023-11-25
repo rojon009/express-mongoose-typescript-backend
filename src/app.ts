@@ -26,7 +26,7 @@ app.use('/api', router)
 // Homepage
 app.get('/', (req: Request, res: Response) => {
   res.send(
-    '<h3 style="margin-top: 50px; text-align: center">Goto <br/> <a href="/api-docs">API DOCS</a><br/>for API documentation</h3>',
+    '<h3 style="margin-top: 50px; text-align: center">Hey Rojon Here.</h3>',
   )
 })
 

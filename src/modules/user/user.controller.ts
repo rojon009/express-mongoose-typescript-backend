@@ -23,6 +23,7 @@ const createUser = async (
 
     if (validatedUserData.error) {
       errorResponse(res, 422, validatedUserData.error?.message)
+      return
     }
 
     const result = await UserService.createUserIntoDB(validatedUserData.value)
@@ -61,6 +62,7 @@ const getUserByUserId = async (
 
     if (!(await User.isUserExists(Number(userId)))) {
       errorResponse(res, 404, 'User not found')
+      return
     }
 
     const result = await UserService.getUserByUserIdFromDB(Number(userId))
@@ -81,6 +83,7 @@ const deleteUserByUserId = async (
 
     if (!(await User.isUserExists(Number(userId)))) {
       errorResponse(res, 404, 'User not found')
+      return
     }
 
     await UserService.deleteUserByUserIdFromDB(Number(userId))
@@ -102,12 +105,14 @@ const updateUserByUserId = async (
 
     if (!(await User.isUserExists(Number(userId)))) {
       errorResponse(res, 404, 'User not found')
+      return
     }
 
     const validatedUserData = userValidationSchema.validate(userData)
 
     if (validatedUserData.error) {
       errorResponse(res, 422, validatedUserData.error?.message)
+      return
     }
 
     const result = await UserService.updateUserByUserId(
@@ -132,12 +137,14 @@ const addNewProductToOrders = async (
 
     if (!(await User.isUserExists(Number(userId)))) {
       errorResponse(res, 404, 'User not found')
+      return
     }
 
     const validatedProductData = productValidationSchema.validate(productData)
 
     if (validatedProductData.error) {
       errorResponse(res, 422, validatedProductData.error?.message)
+      return
     }
 
     await UserService.addNewProductInOrder(
@@ -161,6 +168,7 @@ const getUserOrders = async (
 
     if (!(await User.isUserExists(Number(userId)))) {
       errorResponse(res, 404, 'User not found')
+      return
     }
 
     const result = await UserService.getUserOrders(Number(userId))
@@ -181,6 +189,7 @@ const getUserOrderTotal = async (
 
     if (!(await User.isUserExists(Number(userId)))) {
       errorResponse(res, 404, 'User not found')
+      return
     }
 
     const result = (await UserService.getUserOrderTotal(Number(userId))) as [
