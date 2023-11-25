@@ -1,4 +1,6 @@
 import { Schema, model } from 'mongoose'
+import bcrypt from 'bcryptjs'
+
 import {
   type UserModel,
   type IAddress,
@@ -111,6 +113,24 @@ const userSchema = new Schema<IUser, UserModel>({
       type: productSchema,
     },
   ],
+})
+
+userSchema.methods.toJSON = function () {
+  const user = this
+
+  const userObject = user.toObject()
+
+  delete userObject.password
+
+  return userObject
+}
+
+userSchema.pre('save', { document: true, query: false }, async function (next) {
+  const user = this
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, Number(process.env.SALT))
+  }
+  next()
 })
 
 userSchema.static('isUserExists', async function (userId) {

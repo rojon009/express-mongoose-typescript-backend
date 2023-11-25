@@ -8,7 +8,10 @@ const createUserIntoDB = async (userData: IUser): Promise<IUser | null> => {
 }
 
 const getAllUsersFromDB = async () => {
-  const results = await User.find()
+  const results = await User.find(
+    {},
+    { username: 1, fullName: 1, age: 1, email: 1, address: 1 },
+  )
   return results
 }
 
