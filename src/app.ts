@@ -6,7 +6,6 @@ import express, {
   type Response,
 } from 'express'
 import cors from 'cors'
-import compression from 'compression'
 
 /** Internal Imports */
 import router from './router/index'
@@ -17,7 +16,6 @@ const app: Application = express()
 
 /** Middleware */
 app.use(cors())
-app.use(compression())
 app.use(express.json())
 
 // Routes
@@ -26,7 +24,7 @@ app.use('/api', router)
 // Homepage
 app.get('/', (req: Request, res: Response) => {
   res.send(
-    '<h3 style="margin-top: 50px; text-align: center">Hey Rojon Here.</h3>',
+    '<h3 style="margin-top: 50px; text-align: center">Hey Rojon is Here.</h3>',
   )
 })
 
