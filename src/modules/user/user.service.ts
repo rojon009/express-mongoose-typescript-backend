@@ -2,7 +2,7 @@
 import { IProduct, type IUser } from './user.interface'
 import { User } from './user.model'
 
-const createUserIntoDB = async (userData: IUser): Promise<IUser | null> => {
+const createUserIntoDB = async (userData: IUser) => {
   const result = await User.create(userData)
   return result
 }
