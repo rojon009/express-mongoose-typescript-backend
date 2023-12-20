@@ -16,7 +16,8 @@ const createUser = async (
     const userData = req.body
 
     if (await User.isUserExists(userData.userId)) {
-      throw new Error('User already Exist with this UserId')
+      errorResponse(res, 409, 'User already Exist with this UserId')
+      return
     }
 
     const validatedUserData = userValidationSchema.validate(userData)
@@ -30,7 +31,7 @@ const createUser = async (
 
     successResponse(res, 201, 'User created successfully!', result)
   } catch (err: any) {
-    next(err.message)
+    next(err)
   }
 }
 
@@ -49,7 +50,7 @@ const getAllUsers = async (
 
     successResponse(res, 200, 'Users fetched successfully!', results)
   } catch (err: any) {
-    next(err.message)
+    next(err)
   }
 }
 
@@ -70,7 +71,7 @@ const getUserByUserId = async (
 
     successResponse(res, 200, 'User fetched successfully!', result)
   } catch (err: any) {
-    next(err.message)
+    next(err)
   }
 }
 
@@ -91,7 +92,7 @@ const deleteUserByUserId = async (
 
     successResponse(res, 200, 'User deleted successfully!', null)
   } catch (err: any) {
-    next(err.message)
+    next(err)
   }
 }
 
@@ -123,7 +124,7 @@ const updateUserByUserId = async (
 
     successResponse(res, 200, 'User updated successfully!', result)
   } catch (err: any) {
-    next(err.message)
+    next(err)
   }
 }
 
@@ -155,7 +156,7 @@ const addNewProductToOrders = async (
 
     successResponse(res, 200, 'Order created successfully!', null)
   } catch (err: any) {
-    next(err.message)
+    next(err)
   }
 }
 
@@ -176,7 +177,7 @@ const getUserOrders = async (
 
     successResponse(res, 200, 'Order fetched successfully!', result)
   } catch (err: any) {
-    next(err.message)
+    next(err)
   }
 }
 
@@ -210,7 +211,7 @@ const getUserOrderTotal = async (
       totalPrice,
     })
   } catch (err: any) {
-    next(err.message)
+    next(err)
   }
 }
 
