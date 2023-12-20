@@ -13,7 +13,7 @@ const createUser = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { user: userData } = req.body
+    const userData = req.body
 
     if (await User.isUserExists(userData.userId)) {
       throw new Error('User already Exist with this UserId')
@@ -43,7 +43,8 @@ const getAllUsers = async (
     const results = await UserService.getAllUsersFromDB()
 
     if (!results.length) {
-      successResponse(res, 200, 'No users found in DB', results)
+      errorResponse(res, 404, 'No users found in DB')
+      return
     }
 
     successResponse(res, 200, 'Users fetched successfully!', results)
@@ -101,7 +102,7 @@ const updateUserByUserId = async (
 ): Promise<void> => {
   try {
     const { userId } = req.params
-    const { user: userData } = req.body
+    const userData = req.body
 
     if (!(await User.isUserExists(Number(userId)))) {
       errorResponse(res, 404, 'User not found')

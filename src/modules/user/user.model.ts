@@ -129,7 +129,6 @@ userSchema.methods.toJSON = function () {
 // hash password before save the document
 userSchema.pre('save', { document: true, query: false }, async function (next) {
   const user = this
-  console.log('rojon', user.isModified('password'))
 
   if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, Number(process.env.SALT))
